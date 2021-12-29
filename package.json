@@ -1,6 +1,6 @@
 {
   "name": "@shortie-sh/js-sdk",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "description": "",
   "main": "./dist/Api.js",
   "scripts": {
