@@ -62,16 +62,16 @@ class Shortie {
                 }
             });
             console.log(response);
-            if (response.errors) {
-                if (response.errors[0].extensions.code == "USER_INPUT_ERROR") {
-                    throw new UserError(response.errors[0].message);
+            if (response.data.errors) {
+                if (response.data.errors[0].extensions.code == "USER_INPUT_ERROR") {
+                    throw new UserError(response.data.errors[0].message);
                 }
                 else {
-                    throw new Error(response.errors[0].message);
+                    throw new Error(response.data.errors[0].message);
                 }
             }
             else {
-                return response.data.createRedirect;
+                return response.data.data.createRedirect;
             }
         });
     }
