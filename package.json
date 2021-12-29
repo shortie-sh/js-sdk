@@ -2,7 +2,7 @@
   "name": "@shortie-sh/js-sdk",
   "version": "0.0.2",
   "description": "",
-  "main": "index.js",
+  "main": "./dist/Api.js",
   "scripts": {
     "build": "tsc"
   },
