@@ -1,5 +1,5 @@
 {
-  "name": "shortie",
+  "name": "@shortie-sh/js-sdk",
   "version": "0.0.1",
   "description": "",
   "main": "index.js",
