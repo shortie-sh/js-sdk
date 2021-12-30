@@ -61,7 +61,6 @@ class Shortie {
                     throw new Error("Too many requests");
                 }
             });
-            console.log(response);
             if (response.data.errors) {
                 if (response.data.errors[0].extensions.code == "USER_INPUT_ERROR") {
                     throw new UserError(response.data.errors[0].message);
@@ -85,24 +84,28 @@ class Shortie {
                 }
             }`
             });
-            const request = yield fetch(`${this.instance}/api/graphql`, {
-                method: 'POST',
+            const response = yield axios.post(`${this.instance}/api/graphql`, queryStr, {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: queryStr,
+            }).catch(e => {
+                if (!e.response || e.response.status == 500) {
+                    throw new Error("Server unavailable");
+                }
+                if (e.response.status == 429) {
+                    throw new Error("Too many requests");
+                }
             });
-            const response = yield request.json();
-            if (response.errors) {
-                if (response.errors[0].extensions.code == "USER_INPUT_ERROR") {
-                    throw new UserError(response.errors[0].message);
+            if (response.data.errors) {
+                if (response.data.errors[0].extensions.code == "USER_INPUT_ERROR") {
+                    throw new UserError(response.data.data.errors[0].message);
                 }
                 else {
-                    throw new Error(response.errors[0].message);
+                    throw new Error(response.data.data.errors[0].message);
                 }
             }
             else {
-                return new Redirect(response.data.getRedirect.url, response.data.getRedirect.ending);
+                return new Redirect(response.data.data.getRedirect.url, response.data.data.getRedirect.ending);
             }
         });
     }
